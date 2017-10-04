@@ -1,4 +1,5 @@
 package com.example.demo;
+
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
@@ -6,7 +7,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 	public class Producer {
-	    public static final String QUEUE_NAME = "Send";
+	    public static final String QUEUE_NAME = "Merge";
 	    public static Connection connection;
 
 	    public void setupConnection() throws IOException, TimeoutException {
@@ -17,7 +18,10 @@ import com.rabbitmq.client.Channel;
 
 	        connection = factory.newConnection();
 	        Channel channel = connection.createChannel();
+	     // declare a durable, non exclusive, non autodelete queue named 'task_queue'
 	        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+	        channel.basicPublish("", QUEUE_NAME, null, null );
+	 
+	       
 	    }
 }
-

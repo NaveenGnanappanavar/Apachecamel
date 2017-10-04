@@ -4,20 +4,24 @@ import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
 public class MyAggregationStrategy implements AggregationStrategy {
-	public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-		if (oldExchange == null) {
 
-			return newExchange;
+	@Override
+	public Exchange aggregate(Exchange arg0, Exchange arg1) {
+		// TODO Auto-generated method stub
+
+		if (arg0 == null) {
+			return arg1;
 		}
 
-		String orders = oldExchange.getIn().getBody(String.class);
-		String newLine = newExchange.getIn().getBody(String.class);
+		String first = arg0.getIn().getBody(String.class);
+		String second = arg1.getIn().getBody(String.class);
 
-		orders = orders + ";" + newLine;
+		first = first + ";" + second;
 
-		oldExchange.getIn().setBody(orders);
+		arg0.getIn().setBody(first);
 
-		return oldExchange;
+		return arg0;
 
 	}
+
 }
